@@ -1,0 +1,33 @@
+<h5>Recommendations reçues</h5>
+<p-carousel
+    [value]="recommendations"
+    [numVisible]="3"
+    [numScroll]="1"
+    [circular]="false"
+    [showNavigators]="false"
+    [showIndicators]="false"
+>
+    <ng-template let-movie pTemplate="item">
+        <div class="border-1 surface-border border-round m-1">
+            <div class="">
+                <div class="relative mx-auto">
+                    <img
+                        src="{{ movie.posterPath }}"
+                        [alt]="movie.title"
+                        class="w-full border-round"/>
+                </div>
+            </div>
+            <div class="font-l font-semibold">
+                {{ movie.title }} ({{ movie.releaseDate?.substring(0, 4) }})
+            </div>
+            <div class="flex justify-content-between align-items-center">
+                <div class="text-medium">
+                    {{ movie.genres[0] }} - {{ Utils.getRuntimeFormatted(movie.runtime) }}
+                </div>
+                <span>
+                        <p-button icon="pi pi-bookmark" styleClass=""/>
+                    </span>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>

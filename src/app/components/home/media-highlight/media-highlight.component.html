@@ -1,0 +1,11 @@
+<div class="container">
+    <img
+        src="{{movie.backdropPath}}"
+        alt="backdrop"
+        width="100%">
+    <div class="title">{{movie.title}}</div>
+    <div class="rating"><p-rating [(ngModel)]="movie.rating"
+                                  [cancel]="false" [readonly]="true"
+                                  [stars]="Constants.MAX_RATING_STARS"
+    /></div>
+</div>

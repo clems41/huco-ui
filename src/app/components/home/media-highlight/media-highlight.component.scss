@@ -1,0 +1,20 @@
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+/* Bottom left text */
+.title {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    font-weight: bold;
+}
+
+/* Top right text */
+.rating {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
