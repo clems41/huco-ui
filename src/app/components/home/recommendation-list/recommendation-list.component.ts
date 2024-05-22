@@ -1,11 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {RecommendationService} from "../../../services/recommendation.service";
-import {Movie} from "../../../models/movie";
+import {Media, MediaWithRating} from "../../../models/media";
 import {CarouselModule} from "primeng/carousel";
 import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
 import {ScrollerModule} from "primeng/scroller";
-import {Utils} from "../../../utils/utils";
+import {MovieUtils} from "../../../utils/movieUtils";
+import {Constants} from "../../../constants";
+import {RatingModule} from "primeng/rating";
+import {FormsModule} from "@angular/forms";
+import {TooltipModule} from "primeng/tooltip";
 
 @Component({
   selector: 'app-recommendation-list',
@@ -14,13 +18,16 @@ import {Utils} from "../../../utils/utils";
         CarouselModule,
         TagModule,
         ButtonModule,
-        ScrollerModule
+        ScrollerModule,
+        RatingModule,
+        FormsModule,
+        TooltipModule
     ],
   templateUrl: './recommendation-list.component.html',
   styleUrl: './recommendation-list.component.scss'
 })
 export class RecommendationListComponent implements OnInit{
-    protected recommendations: Movie[] = [];
+    protected recommendations: MediaWithRating[] = [];
     constructor(private recommendationService: RecommendationService) {
     }
     ngOnInit(): void {
@@ -28,7 +35,5 @@ export class RecommendationListComponent implements OnInit{
             this.recommendations = recommendations;
         })
     }
-
-    protected readonly Math = Math;
-    protected readonly Utils = Utils;
+    protected readonly Constants = Constants;
 }

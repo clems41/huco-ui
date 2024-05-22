@@ -9,6 +9,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                 path: '', component: AppLayoutComponent,
                 children: [
                     { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule) },
+                    { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule) },
                 ]
             },
             { path: '**', redirectTo: '/notfound' },

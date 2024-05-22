@@ -1,13 +1,13 @@
 .container {
     position: relative;
     text-align: center;
-    color: white;
 }
 
 /* Bottom left text */
-.title {
+.title h3 {
+    color: white;
     position: absolute;
-    bottom: 1rem;
+    bottom: 0.5rem;
     left: 1rem;
     font-weight: bold;
 }

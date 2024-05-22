@@ -14,33 +14,63 @@ $gutter: 1rem; //for primeflex grid system
 @import "assets/demo/styles/badges.scss";
 @import "assets/demo/styles/code.scss";
 
-.layout-topbar {
-    background-color: #1c142c;
-    display: flex;
+.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
+    color: #f4ad35;
 }
 
-.layout-topbar-logo {
-    align-items: center;
+.action-button {
+    background-color: #f4ad35;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.5rem 0.5rem;
+    border-radius: 10rem;
+    font-size: 1rem;
+}
+
+.layout-main {
+    background-color: #1c142c;
+    color: #FFFFFF;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.layout-topbar {
+    background-color: #1c142c;
+    height: 5rem;
 }
 
 .layout-topbar-button i {
     color: #FFFFFF;
     font-size:1.5rem;
-    margin: 2rem;
 }
 
 .layout-footer {
     background-color: #1c142c;
     position: fixed;
-    display: flex;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 5rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.layout-footer-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
 }
 
 .layout-footer-button i {
     color: #FFFFFF;
     font-size:1.5rem;
-    margin: 2rem;
 }

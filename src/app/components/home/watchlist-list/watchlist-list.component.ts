@@ -3,8 +3,8 @@ import {ButtonModule} from "primeng/button";
 import {CarouselModule} from "primeng/carousel";
 import {SharedModule} from "primeng/api";
 import {WatchlistService} from "../../../services/watchlist.service";
-import {Movie} from "../../../models/movie";
-import {Utils} from "../../../utils/utils";
+import {Media, MediaWithRating} from "../../../models/media";
+import {MovieUtils} from "../../../utils/movieUtils";
 import {Constants} from "../../../constants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
@@ -23,7 +23,7 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './watchlist-list.component.scss'
 })
 export class WatchlistListComponent implements OnInit{
-    protected watchlist: Movie[] = [];
+    protected watchlist: MediaWithRating[] = [];
     constructor(private watchlistService: WatchlistService) {}
     ngOnInit(): void {
         this.watchlistService.getWatchlist().subscribe((watchlist) => {
@@ -32,6 +32,6 @@ export class WatchlistListComponent implements OnInit{
     }
 
     protected readonly Math = Math;
-    protected readonly Utils = Utils;
+    protected readonly Utils = MovieUtils;
     protected readonly Constants = Constants;
 }

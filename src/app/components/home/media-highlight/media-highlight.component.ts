@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RecommendationService} from "../../../services/recommendation.service";
-import {Movie} from "../../../models/movie";
+import {Media, MediaWithRating} from "../../../models/media";
 import {ImageModule} from "primeng/image";
 import {NgOptimizedImage} from "@angular/common";
 import {RatingModule} from "primeng/rating";
@@ -20,7 +20,7 @@ import {Constants} from "../../../constants";
   styleUrl: './media-highlight.component.scss'
 })
 export class MediaHighlightComponent implements OnInit {
-    protected movie: Movie;
+    protected movie: MediaWithRating;
     constructor(private recommendationService: RecommendationService) {}
 
     ngOnInit(): void {

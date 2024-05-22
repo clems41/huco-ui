@@ -1,7 +1,7 @@
-import { Movie } from './movie';
+import { Media } from './media';
 
 describe('Movie', () => {
   it('should create an instance', () => {
-    expect(new Movie()).toBeTruthy();
+    expect(new Media()).toBeTruthy();
   });
 });

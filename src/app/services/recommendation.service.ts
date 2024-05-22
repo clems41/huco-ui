@@ -1,31 +1,23 @@
 import {Injectable} from '@angular/core';
-import {Movie} from "../models/movie";
+import {Media, MediaWithRating} from "../models/media";
 import {Observable, of} from "rxjs";
+import {MovieUtils} from "../utils/movieUtils";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RecommendationService {
-    private mockMovie: Movie = {
-        id: '1',
-        title: 'Les évadés',
-        releaseDate: '1994-09-23',
-        posterPath: 'https://image.tmdb.org/t/p/w400/t30GjttOdb5At1sYy8b3TOwFgWV.jpg',
-        backdropPath: 'https://image.tmdb.org/t/p/w400/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg',
-        trailerUrl: 'https://www.youtube.com/watch?v=UIzBz2hYnwc',
-        genres: ['Drame', 'Crime'],
-        rating: 4.2,
-        runtime: 142
-    };
 
     constructor() {
     }
 
-    getHighlightRecommendation(): Observable<Movie> {
-        return of(this.mockMovie);
+    getHighlightRecommendation(): Observable<MediaWithRating> {
+        return of(MovieUtils.getMockMovieWithRating2());
     }
 
-    getRecommendations(): Observable<Movie[]> {
-        return of([this.mockMovie, this.mockMovie, this.mockMovie, this.mockMovie, this.mockMovie]);
+    getRecommendations(): Observable<MediaWithRating[]> {
+        return of([MovieUtils.getMockMovieWithRating1(), MovieUtils.getMockMovieWithRating2(),
+            MovieUtils.getMockMovieWithRating1(), MovieUtils.getMockMovieWithRating2(),
+            MovieUtils.getMockMovieWithRating1()]);
     }
 }
