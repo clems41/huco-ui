@@ -1,6 +1,7 @@
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import {Injectable, NgModule} from '@angular/core';
 import { AppLayoutComponent } from "./layout/app.layout.component";
+import {canActivate} from "./auth.guard";
 
 @NgModule({
     imports: [
@@ -8,11 +9,13 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
             {
                 path: '', component: AppLayoutComponent,
                 children: [
-                    { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule) },
-                    { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule) },
+                    { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule), canActivate: [canActivate] },
+                    { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule), canActivate: [canActivate] },
+                    { path: 'signup', loadChildren: () => import('./components/signup/signup.module').then(m => m.SignupModule) },
+                    { path: 'signin', loadChildren: () => import('./components/signin/signin.module').then(m => m.SigninModule) },
                 ]
             },
-            { path: '**', redirectTo: '/notfound' },
+            { path: '**', redirectTo: '' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],
     exports: [RouterModule]

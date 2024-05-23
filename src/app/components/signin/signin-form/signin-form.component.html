@@ -1,0 +1,36 @@
+<form [formGroup]="authForm" class="login-container" (ngSubmit)="signIn()">
+    <p-inputGroup>
+        <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+        </p-inputGroupAddon>
+        <input  pInputText placeholder="Nom d'utilisateur" formControlName="username" />
+    </p-inputGroup>
+    <p-inputGroup>
+        <p-inputGroupAddon>
+            <i class="pi pi-key"></i>
+        </p-inputGroupAddon>
+        <input type="password" pInputText placeholder="Mot de passe" formControlName="password" />
+    </p-inputGroup>
+
+
+    <div *ngIf="isSubmitted && formControls['password'].errors" class="help-block">
+        <div *ngIf="formControls.password.errors.required">Mot de passe obligatoire</div>
+    </div>
+    <div *ngIf="isSubmitted && formControls['username'].errors" class="help-block">
+        <div *ngIf="formControls.username.errors.required">Nom d'utilisateur obligatoire</div>
+    </div>
+    <div *ngIf="isSubmitted && authenticationFailed" class="help-block">
+        <div>L'utilisateur n'a pas pu s'authentifier avec les identifiants fournis</div>
+    </div>
+
+    <p>
+        <input type="submit" value="Se connecter" class="action-button">
+    </p>
+</form>
+
+<div>
+    <p>Vous n'avez pas encore de compte ?</p>
+    <a routerLink="/signup" class="p-button font-bold action-button">
+        Créer un compte
+    </a>
+</div>
