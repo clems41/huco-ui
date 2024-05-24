@@ -6,6 +6,8 @@ export class User {
 export class AuthUser extends User {
     id: string;
     email: string;
+    topicName: string;
+    relatedUser: User[];
 }
 
 export class UserLogin {

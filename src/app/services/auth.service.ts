@@ -1,25 +1,68 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AuthUser, User, UserLogin, UserSignUpForm} from "../models/user";
-import {Observable, of} from "rxjs";
+import {map, Observable, of} from "rxjs";
+import {environment} from "../../environments/environment";
+import {HttpService} from "./http.service";
+import {HttpHeaders} from "@angular/common/http";
+import {AppConstants} from "../constants/appConstants";
+import {AuthSignInResponse} from "../models/interfaces/auth-signin-response";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
+    private authUrl = environment.API_URL + '/auth';
 
-    constructor() { }
-    public signIn(userLogin: UserLogin): Observable<AuthUser> {
-        localStorage.setItem('ACCESS_TOKEN', "access_token");
-        return of(new AuthUser());
+    constructor(private httpService: HttpService) {
     }
+
+    public signIn(userLogin: UserLogin): Observable<AuthSignInResponse> {
+        let headers = this.getAuthorizationHeaders(userLogin.username, userLogin.password);
+        return this.httpService.get(
+            this.authUrl + '/sign-in',
+            headers,
+            true
+        ).pipe(
+            map((response: AuthSignInResponse) => {
+                    localStorage.setItem(AppConstants.ACCESS_TOKEN_LOCAL_STORAGE_ITEM_KEY, response.token.tokenString);
+                    localStorage.setItem(AppConstants.ACCESS_TOKEN_EXPIRATION_DATE_LOCAL_STORAGE_ITEM_KEY, response.token.expirationDate);
+                    return response;
+                }
+            ));
+    }
+
     public signUp(userSignUpForm: UserSignUpForm): Observable<AuthUser> {
-        return of(new AuthUser());
+        return this.httpService
+            .post(this.authUrl + '/sign-up', userSignUpForm, true)
+            .pipe(
+                map((response: AuthUser) => {
+                    return response;
+                })
+            );
     }
-    public isLoggedIn(): Observable<boolean>{
-        return of(localStorage.getItem('ACCESS_TOKEN') !== null);
-    }
-    public logout(): Observable<boolean> {
-        localStorage.removeItem('ACCESS_TOKEN');
+
+    public isLoggedIn(): Observable<boolean> {
+        let token = localStorage.getItem(AppConstants.ACCESS_TOKEN_LOCAL_STORAGE_ITEM_KEY);
+        let expirationDate: Date = new Date(localStorage.getItem(AppConstants.ACCESS_TOKEN_EXPIRATION_DATE_LOCAL_STORAGE_ITEM_KEY));
+        console.log(expirationDate);
+        if (token === null) {
+            return of(false);
+        }
+        if (expirationDate < new Date()) {
+            return of(false);
+        }
         return of(true);
+    }
+
+    public logout(): Observable<boolean> {
+        localStorage.removeItem(AppConstants.ACCESS_TOKEN_LOCAL_STORAGE_ITEM_KEY);
+        return of(true);
+    }
+
+    private getAuthorizationHeaders(username: string, password: string): HttpHeaders {
+        return new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + btoa(username + ':' + password),
+        });
     }
 }

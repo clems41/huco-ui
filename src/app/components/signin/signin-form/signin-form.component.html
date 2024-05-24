@@ -13,14 +13,16 @@
     </p-inputGroup>
 
 
-    <div *ngIf="isSubmitted && formControls['password'].errors" class="help-block">
-        <div *ngIf="formControls.password.errors.required">Mot de passe obligatoire</div>
-    </div>
-    <div *ngIf="isSubmitted && formControls['username'].errors" class="help-block">
-        <div *ngIf="formControls.username.errors.required">Nom d'utilisateur obligatoire</div>
-    </div>
-    <div *ngIf="isSubmitted && authenticationFailed" class="help-block">
-        <div>L'utilisateur n'a pas pu s'authentifier avec les identifiants fournis</div>
+    <div *ngIf="isSubmitted" class="error-message">
+        <div *ngIf="formControls['password'].errors" class="error-message">
+            <div *ngIf="formControls.password.errors.required">Mot de passe obligatoire</div>
+        </div>
+        <div *ngIf="formControls['username'].errors" class="error-message">
+            <div *ngIf="formControls['username'].errors.required">Nom d'utilisateur obligatoire</div>
+        </div>
+        <div *ngIf="authenticationFailed" class="error-message">
+            <div>Impossible de se connecter, vérifiez vos identifiants</div>
+        </div>
     </div>
 
     <p>

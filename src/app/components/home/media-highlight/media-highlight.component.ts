@@ -5,7 +5,7 @@ import {ImageModule} from "primeng/image";
 import {NgOptimizedImage} from "@angular/common";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
-import {Constants} from "../../../constants";
+import {AppConstants} from "../../../constants/appConstants";
 
 @Component({
   selector: 'app-media-highlight',
@@ -30,5 +30,5 @@ export class MediaHighlightComponent implements OnInit {
             });
     }
 
-    protected readonly Constants = Constants;
+    protected readonly Constants = AppConstants;
 }

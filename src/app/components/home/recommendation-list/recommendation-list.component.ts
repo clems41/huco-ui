@@ -6,7 +6,7 @@ import {TagModule} from "primeng/tag";
 import {ButtonModule} from "primeng/button";
 import {ScrollerModule} from "primeng/scroller";
 import {MovieUtils} from "../../../utils/movieUtils";
-import {Constants} from "../../../constants";
+import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {TooltipModule} from "primeng/tooltip";
@@ -35,5 +35,5 @@ export class RecommendationListComponent implements OnInit{
             this.recommendations = recommendations;
         })
     }
-    protected readonly Constants = Constants;
+    protected readonly Constants = AppConstants;
 }

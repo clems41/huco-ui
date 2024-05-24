@@ -29,6 +29,7 @@ export class SigninFormComponent implements OnInit {
     isSubmitted = false;
     authenticationFailed = false;
 
+
     constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
     }
 
@@ -48,7 +49,7 @@ export class SigninFormComponent implements OnInit {
         if (this.authForm.invalid) {
             return;
         }
-        this.authService.signIn(new UserLogin(this.authForm.value.getUsername, this.authForm.value.getPassword))
+        this.authService.signIn(new UserLogin(this.authForm.value['username'], this.authForm.value['password']))
             .subscribe({
                 next: (user) => {
                     this.router.navigateByUrl('/');

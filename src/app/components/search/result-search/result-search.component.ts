@@ -6,7 +6,7 @@ import {DataViewModule} from "primeng/dataview";
 import {SkeletonModule} from "primeng/skeleton";
 import {ButtonModule} from "primeng/button";
 import {TagModule} from "primeng/tag";
-import {Constants} from "../../../constants";
+import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";

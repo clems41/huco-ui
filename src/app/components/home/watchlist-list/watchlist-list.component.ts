@@ -5,7 +5,7 @@ import {SharedModule} from "primeng/api";
 import {WatchlistService} from "../../../services/watchlist.service";
 import {Media, MediaWithRating} from "../../../models/media";
 import {MovieUtils} from "../../../utils/movieUtils";
-import {Constants} from "../../../constants";
+import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 
@@ -33,5 +33,5 @@ export class WatchlistListComponent implements OnInit{
 
     protected readonly Math = Math;
     protected readonly Utils = MovieUtils;
-    protected readonly Constants = Constants;
+    protected readonly Constants = AppConstants;
 }

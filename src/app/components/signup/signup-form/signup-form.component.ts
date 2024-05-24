@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
 import {Router, RouterLink} from "@angular/router";
@@ -24,10 +24,10 @@ import {NgIf} from "@angular/common";
   templateUrl: './signup-form.component.html',
   styleUrl: './signup-form.component.scss'
 })
-export class SignupFormComponent {
+export class SignupFormComponent implements OnInit {
     signUpForm: FormGroup;
     isSubmitted = false;
-    signupFailed = false;
+    errorMessage = null;
 
     constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
     }
@@ -51,30 +51,30 @@ export class SignupFormComponent {
             return;
         }
         this.authService.signUp(new UserSignUpForm(
-            this.signUpForm.value.getUsername,
-            this.signUpForm.value.getPassword,
-            this.signUpForm.value.getEmail,
-            this.signUpForm.value.getDisplayName
+            this.signUpForm.value['username'],
+            this.signUpForm.value['password'],
+            this.signUpForm.value['email'],
+            this.signUpForm.value['displayName']
         ))
             .subscribe({
                 next: (user) => {
                     this.authService.signIn(new UserLogin(
-                        this.signUpForm.value.getUsername,
-                        this.signUpForm.value.getPassword
+                        this.signUpForm.value['username'],
+                        this.signUpForm.value['password']
                     ))
                         .subscribe({
                             next: (user) => {
                                 this.router.navigateByUrl('/');
                             },
                             error:
-                                (error) => {
+                                (errorMessage: string) => {
                                     this.router.navigateByUrl('/signin');
                                 }
                         });
                 },
                 error:
-                    (error) => {
-                        this.signupFailed = true;
+                    (errorMessage: string) => {
+                        this.errorMessage = errorMessage;
                     }
             });
     }
