@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, of} from "rxjs";
-import {Media} from "../models/media";
+import {BehaviorSubject, map, Observable, of} from "rxjs";
+import {Media, MediaWithRating} from "../models/media";
 import {MovieUtils} from "../utils/movieUtils";
+import {HttpService} from "./http.service";
+import {HttpParams} from "@angular/common/http";
+import {AuthUser} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +13,40 @@ export class SearchService {
     private localStorageHistoryKey = "searchHistory"
     private localStorageHistoryDelimiter = ";"
     private localStorageHistoryMax = 3;
-    private mockResult: Media[] = [
-        MovieUtils.getMockMovie1(), MovieUtils.getMockMovie2(), MovieUtils.getMockSerie1(),
-        MovieUtils.getMockSerie1(), MovieUtils.getMockMovie2(), MovieUtils.getMockMovie1(),
-        MovieUtils.getMockMovie1(), MovieUtils.getMockSerie1(), MovieUtils.getMockMovie2(),
-    ]
+    private searchPath = '/medias';
 
     private searchQuery: BehaviorSubject<string> = new BehaviorSubject('');
 
-    constructor() { }
+    constructor(private httpService: HttpService) { }
     getSearchQuery() { return this.searchQuery; }
 
     updateSearchQuery(query: string) {
         this.searchQuery.next(query);
     }
 
-    searchMedias(query: string):Observable<Media[]> {
-        return of(this.mockResult.sort(() => Math.random() - 0.5));
+    searchMedias(query: string):Observable<MediaWithRating[]> {
+        let queryParameters = new HttpParams();
+        queryParameters = queryParameters.append('query', query);
+        return this.httpService.get(
+            this.searchPath,
+            null,
+            queryParameters,
+            false
+        )
+            .pipe(
+                map((response: any[]) => {
+                    let result: MediaWithRating[] = [];
+                    response.forEach((media: any) => {
+                        let mediaWithRating = new MediaWithRating(media);
+                        console.log(mediaWithRating);
+                        console.log(mediaWithRating.getReleaseYear());
+                        console.log(mediaWithRating.mediaType);
+                        result.push(mediaWithRating);
+                    });
+                    console.log(result);
+                    return result;
+                })
+            );
     }
 
     private getSearchHistory(): string[] {

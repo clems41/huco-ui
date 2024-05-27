@@ -11,7 +11,9 @@ import {AuthSignInResponse} from "../models/interfaces/auth-signin-response";
     providedIn: 'root'
 })
 export class AuthService {
-    private authUrl = environment.API_URL + '/auth';
+    private authPath = '/auth';
+    private signInPath = this.authPath + '/sign-in';
+    private signUpPath = this.authPath + '/sign-up';
 
     constructor(private httpService: HttpService) {
     }
@@ -19,8 +21,9 @@ export class AuthService {
     public signIn(userLogin: UserLogin): Observable<AuthSignInResponse> {
         let headers = this.getAuthorizationHeaders(userLogin.username, userLogin.password);
         return this.httpService.get(
-            this.authUrl + '/sign-in',
+            this.signInPath,
             headers,
+            null,
             true
         ).pipe(
             map((response: AuthSignInResponse) => {
@@ -33,7 +36,7 @@ export class AuthService {
 
     public signUp(userSignUpForm: UserSignUpForm): Observable<AuthUser> {
         return this.httpService
-            .post(this.authUrl + '/sign-up', userSignUpForm, true)
+            .post(this.signUpPath, userSignUpForm, true)
             .pipe(
                 map((response: AuthUser) => {
                     return response;

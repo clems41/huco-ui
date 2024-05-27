@@ -9,11 +9,11 @@ import {TagModule} from "primeng/tag";
 import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-result-search',
-  standalone: true,
+    selector: 'app-result-search',
+    standalone: true,
     imports: [
         ProgressSpinnerModule,
         DataViewModule,
@@ -22,15 +22,17 @@ import {NgForOf} from "@angular/common";
         TagModule,
         RatingModule,
         FormsModule,
-        NgForOf
+        NgForOf,
+        NgIf
     ],
-  templateUrl: './result-search.component.html',
-  styleUrl: './result-search.component.scss'
+    templateUrl: './result-search.component.html',
+    styleUrl: './result-search.component.scss'
 })
 export class ResultSearchComponent {
     protected searchResultSeries: Media[] = [];
     protected searchResultMovies: Media[] = [];
     protected loading: boolean = false;
+
     constructor(private searchService: SearchService) {
         this.searchService.getSearchQuery().subscribe(query => {
             this.updateSearchResults(query);
@@ -38,10 +40,18 @@ export class ResultSearchComponent {
     }
 
     updateSearchResults(query: string) {
+        if (query.length < 3) {
+            return;
+        }
         this.loading = true;
         this.searchService.searchMedias(query).subscribe(result => {
-            this.searchResultMovies = result.filter(media => media.mediaType === MediaType.Movie);
-            this.searchResultSeries= result.filter(media => media.mediaType === MediaType.TvShow);
+            console.log(result[0].getReleaseYear());
+            this.searchResultMovies = result
+                .filter(media => media.mediaType === MediaType.Movie)
+                .slice(0, AppConstants.MAX_SEARCH_RESULTS_BY_MEDIA_TYPE);
+            this.searchResultSeries = result
+                .filter(media => media.mediaType === MediaType.TvShow)
+                .slice(0, AppConstants.MAX_SEARCH_RESULTS_BY_MEDIA_TYPE);
             this.loading = false;
         });
         this.searchService.addQueryToSearchHistory(query);
