@@ -1,13 +1,13 @@
 export class User {
+    id: string;
     username: string;
     displayName: string;
 }
 
 export class AuthUser extends User {
-    id: string;
     email: string;
     topicName: string;
-    relatedUser: User[];
+    relatedUsers: User[];
 }
 
 export class UserLogin {

@@ -47,7 +47,6 @@ export class AuthService {
     public isLoggedIn(): Observable<boolean> {
         let token = localStorage.getItem(AppConstants.ACCESS_TOKEN_LOCAL_STORAGE_ITEM_KEY);
         let expirationDate: Date = new Date(localStorage.getItem(AppConstants.ACCESS_TOKEN_EXPIRATION_DATE_LOCAL_STORAGE_ITEM_KEY));
-        console.log(expirationDate);
         if (token === null) {
             return of(false);
         }

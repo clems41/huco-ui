@@ -47,8 +47,22 @@ $gutter: 1rem; //for primeflex grid system
 }
 
 .layout-topbar {
+    display: flex;
     background-color: #1c142c;
     height: 5rem;
+    align-items: center;
+}
+
+.layout-topbar-left {
+    justify-content: left;
+}
+
+.layout-topbar-center {
+    justify-content: center;
+}
+
+.layout-topbar-right {
+    justify-content: right;
 }
 
 .layout-topbar-button i {
@@ -65,13 +79,7 @@ $gutter: 1rem; //for primeflex grid system
     height: 3rem;
     display: flex;
     align-items: center;
-}
-
-.layout-footer-button {
-    display: inline-flex;
     justify-content: center;
-    align-items: center;
-    position:relative;
 }
 
 .layout-footer-button i {

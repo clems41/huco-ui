@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchService} from "../../../services/search.service";
 import {Media, MediaType} from "../../../models/media";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
@@ -10,6 +10,8 @@ import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
+import {Subscription} from "rxjs";
+import {query} from "@angular/animations";
 
 @Component({
     selector: 'app-result-search',
@@ -28,15 +30,13 @@ import {NgForOf, NgIf} from "@angular/common";
     templateUrl: './result-search.component.html',
     styleUrl: './result-search.component.scss'
 })
-export class ResultSearchComponent {
+export class ResultSearchComponent implements OnDestroy, OnInit{
     protected searchResultSeries: Media[] = [];
     protected searchResultMovies: Media[] = [];
     protected loading: boolean = false;
+    private searchQuerySubscription: Subscription;
 
     constructor(private searchService: SearchService) {
-        this.searchService.getSearchQuery().subscribe(query => {
-            this.updateSearchResults(query);
-        });
     }
 
     updateSearchResults(query: string) {
@@ -45,7 +45,7 @@ export class ResultSearchComponent {
         }
         this.loading = true;
         this.searchService.searchMedias(query).subscribe(result => {
-            console.log(result[0].getReleaseYear());
+            result = result.filter(media => media.posterPath !== null)
             this.searchResultMovies = result
                 .filter(media => media.mediaType === MediaType.Movie)
                 .slice(0, AppConstants.MAX_SEARCH_RESULTS_BY_MEDIA_TYPE);
@@ -56,5 +56,15 @@ export class ResultSearchComponent {
         });
         this.searchService.addQueryToSearchHistory(query);
 
+    }
+
+    ngOnDestroy(): void {
+        this.searchQuerySubscription.unsubscribe();
+    }
+
+    ngOnInit(): void {
+        this.searchQuerySubscription = this.searchService.getSearchQuery().subscribe(query => {
+            this.updateSearchResults(query);
+        });
     }
 }

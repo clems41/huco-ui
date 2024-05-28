@@ -14,13 +14,11 @@ export class HttpService {
     }
 
     public get(url: string, headers: HttpHeaders = null, queryParameters: HttpParams = null, disableAuth = false) {
-        if (!disableAuth) {
-            headers = this.getAuthorizationHeaders();
+        let options = this.getAuthorizationHeaders(disableAuth);
+        if (queryParameters !== null) {
+            options['params'] = queryParameters;
         }
-        return this.httpClient.get(environment.API_URL + url, {
-            headers: headers,
-            params: queryParameters
-        })
+        return this.httpClient.get(environment.API_URL + url, options)
             .pipe(
                 catchError((error): string => {
                     throw this.handleError(error);
@@ -29,11 +27,7 @@ export class HttpService {
     }
 
     public post(url: string, body: any, disableAuth = false) {
-        let headers = {};
-        if (!disableAuth) {
-            headers = this.getAuthorizationHeaders();
-        }
-        return this.httpClient.post(environment.API_URL + url, body, headers)
+        return this.httpClient.post(environment.API_URL + url, body, this.getAuthorizationHeaders(disableAuth))
             .pipe(
                 catchError((error): string => {
                     throw this.handleError(error);
@@ -42,11 +36,7 @@ export class HttpService {
     }
 
     public put(url: string, body: any, disableAuth = false) {
-        let headers = {};
-        if (!disableAuth) {
-            headers = this.getAuthorizationHeaders();
-        }
-        return this.httpClient.put(environment.API_URL + url, body, headers)
+        return this.httpClient.put(environment.API_URL + url, body, this.getAuthorizationHeaders(disableAuth))
             .pipe(
                 catchError((error): string => {
                     throw this.handleError(error);
@@ -55,12 +45,8 @@ export class HttpService {
     }
 
     public delete(url: string, disableAuth = false) {
-        let headers = {};
-        if (!disableAuth) {
-            headers = this.getAuthorizationHeaders();
-        }
         return this.httpClient
-            .delete(environment.API_URL + url, headers)
+            .delete(environment.API_URL + url, this.getAuthorizationHeaders(disableAuth))
             .pipe(
                 catchError((error): string => {
                     throw this.handleError(error);
@@ -68,12 +54,16 @@ export class HttpService {
             );
     }
 
-    private getAuthorizationHeaders(): HttpHeaders {
-        const token = localStorage.getItem(AppConstants.ACCESS_TOKEN_LOCAL_STORAGE_ITEM_KEY);
-        return new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Authorization': 'Bearer ' + token,
-        });
+    private getAuthorizationHeaders(disableAuth: boolean): {} {
+        if (disableAuth) {
+            return {};
+        } else {
+            const token = localStorage.getItem(AppConstants.ACCESS_TOKEN_LOCAL_STORAGE_ITEM_KEY);
+            return {headers :new HttpHeaders({
+                'Content-Type':  'application/json',
+                'Authorization': 'Bearer ' + token,
+            })};
+        }
     }
 
     private handleError(error: any): string {

@@ -1,0 +1,17 @@
+<div class="section-title">Vos amis</div>
+<p-table [value]="relatedUsers">
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="user-table">Nom utilisateur</th>
+            <th class="user-table">Nom d'affichage</th>
+            <th class="user-table"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td class="user-table">{{ user.username }}</td>
+            <td class="user-table">{{ user.displayName }}</td>
+            <td class="user-table"><span class="pi pi-minus" (click)="removeRelatedUser(user.id)"></span></td>
+        </tr>
+    </ng-template>
+</p-table>

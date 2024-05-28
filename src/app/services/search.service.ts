@@ -38,12 +38,8 @@ export class SearchService {
                     let result: MediaWithRating[] = [];
                     response.forEach((media: any) => {
                         let mediaWithRating = new MediaWithRating(media);
-                        console.log(mediaWithRating);
-                        console.log(mediaWithRating.getReleaseYear());
-                        console.log(mediaWithRating.mediaType);
                         result.push(mediaWithRating);
                     });
-                    console.log(result);
                     return result;
                 })
             );

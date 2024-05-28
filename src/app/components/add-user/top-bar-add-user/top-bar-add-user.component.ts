@@ -1,36 +1,36 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {SearchService} from "../../../services/search.service";
-import {debounceTime} from "rxjs";
 import {Location} from "@angular/common";
+import {debounceTime} from "rxjs";
+import {UserService} from "../../../services/user.service";
+import {AppConstants} from "../../../constants/appConstants";
 
 @Component({
-  selector: 'app-top-bar-search',
+  selector: 'app-top-bar-add-user',
   standalone: true,
     imports: [
-        RouterLink,
         FormsModule,
         InputTextModule,
-        ReactiveFormsModule,
+        ReactiveFormsModule
     ],
-  templateUrl: './top-bar-search.component.html',
-  styleUrl: './top-bar-search.component.scss'
+  templateUrl: './top-bar-add-user.component.html',
+  styleUrl: './top-bar-add-user.component.scss'
 })
-export class TopBarSearchComponent {
+export class TopBarAddUserComponent {
     searchControl: FormControl;
 
-    constructor(private searchService: SearchService,
+    constructor(private userService: UserService,
                 private location: Location) {
         this.searchControl = new FormControl();
 
         this.searchControl.valueChanges.pipe(debounceTime(500)).subscribe(query => {
-            this.searchService.updateSearchQuery(query);
-        });
-
-        this.searchService.getSearchQuery().subscribe(query => {
-            this.searchControl.setValue(query, {emitEvent: false});
+            console.log('here');
+            if (query.length < 3) {
+                return;
+            }
+            this.userService.updateSearchQuery(query);
         });
     }
 

@@ -11,6 +11,7 @@ import {canActivate} from "./auth.guard";
                 children: [
                     { path: '', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule), canActivate: [canActivate] },
                     { path: 'search', loadChildren: () => import('./components/search/search.module').then(m => m.SearchModule), canActivate: [canActivate] },
+                    { path: 'add-user', loadChildren: () => import('./components/add-user/add-user.module').then(m => m.AddUserModule), canActivate: [canActivate] },
                     { path: 'signup', loadChildren: () => import('./components/signup/signup.module').then(m => m.SignupModule) },
                     { path: 'signin', loadChildren: () => import('./components/signin/signin.module').then(m => m.SigninModule) },
                 ]
