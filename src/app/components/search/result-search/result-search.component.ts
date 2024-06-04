@@ -9,7 +9,7 @@ import {TagModule} from "primeng/tag";
 import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {Subscription} from "rxjs";
 import {query} from "@angular/animations";
 import {RouterLink} from "@angular/router";
@@ -27,7 +27,8 @@ import {RouterLink} from "@angular/router";
         FormsModule,
         NgForOf,
         NgIf,
-        RouterLink
+        RouterLink,
+        NgTemplateOutlet
     ],
     templateUrl: './result-search.component.html',
     styleUrl: './result-search.component.scss'
@@ -36,6 +37,7 @@ export class ResultSearchComponent implements OnDestroy, OnInit{
     protected searchResultSeries: Media[] = [];
     protected searchResultMovies: Media[] = [];
     protected loading: boolean = false;
+    protected movieFirst: boolean = true;
     private searchQuerySubscription: Subscription;
 
     constructor(private searchService: MediaService) {
@@ -48,6 +50,7 @@ export class ResultSearchComponent implements OnDestroy, OnInit{
         this.loading = true;
         this.searchService.searchMedias(query).subscribe(result => {
             result = result.filter(media => media.posterPath !== null)
+            this.movieFirst = result.length > 0 ? result[0].mediaType === MediaType.Movie : true;
             this.searchResultMovies = result
                 .filter(media => media.mediaType === MediaType.Movie)
                 .slice(0, AppConstants.MAX_SEARCH_RESULTS_BY_MEDIA_TYPE);
