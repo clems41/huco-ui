@@ -1,0 +1,22 @@
+.container {
+    position: relative;
+    text-align: center;
+}
+
+/* Bottom left text */
+.title h3 {
+    color: white;
+    position: absolute;
+    bottom: 0.5rem;
+    left: 1rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Top right text */
+.rating {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+

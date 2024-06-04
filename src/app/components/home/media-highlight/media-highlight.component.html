@@ -1,11 +1,14 @@
 <div class="container">
-    <a [href]="movie.trailerUrl"><img
+    <img
         [src]="movie.backdropPath"
         alt="backdrop"
-        width="100%"></a>
-    <div class="title"><h3>{{movie.title}} ({{ movie.getReleaseYear() }})</h3></div>
-    <div class="rating"><p-rating [(ngModel)]="movie.ratingAverage"
-                                  [cancel]="false" [readonly]="true"
-                                  [stars]="Constants.MAX_RATING_STARS"
-    /></div>
+        width="100%"
+        [routerLink]="'/media/' + movie.id">
+    <div class="title"><h3>{{ movie.title }} ({{ movie.getReleaseYear() }})</h3></div>
+    <div class="rating">
+        <p-rating [(ngModel)]="movie.ratingAverage"
+                  [cancel]="false" [readonly]="true"
+                  [stars]="Constants.MAX_RATING_STARS"
+        />
+    </div>
 </div>

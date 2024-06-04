@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import {SearchService} from "../../../services/search.service";
+import {MediaService} from "../../../services/media.service";
 import {Location} from "@angular/common";
 import {debounceTime} from "rxjs";
 import {UserService} from "../../../services/user.service";

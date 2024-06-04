@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable, of} from "rxjs";
 import {Media, MediaWithRating} from "../models/media";
 import {MovieUtils} from "../utils/movieUtils";
@@ -7,28 +7,32 @@ import {HttpParams} from "@angular/common/http";
 import {AuthUser} from "../models/user";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class SearchService {
+export class MediaService {
     private localStorageHistoryKey = "searchHistory"
     private localStorageHistoryDelimiter = ";"
     private localStorageHistoryMax = 3;
-    private searchPath = '/medias';
+    private mediaPath = '/medias';
 
     private searchQuery: BehaviorSubject<string> = new BehaviorSubject('');
 
-    constructor(private httpService: HttpService) { }
-    getSearchQuery() { return this.searchQuery; }
+    constructor(private httpService: HttpService) {
+    }
+
+    getSearchQuery() {
+        return this.searchQuery;
+    }
 
     updateSearchQuery(query: string) {
         this.searchQuery.next(query);
     }
 
-    searchMedias(query: string):Observable<MediaWithRating[]> {
+    searchMedias(query: string): Observable<MediaWithRating[]> {
         let queryParameters = new HttpParams();
         queryParameters = queryParameters.append('query', query);
         return this.httpService.get(
-            this.searchPath,
+            this.mediaPath,
             null,
             queryParameters,
             false
@@ -45,12 +49,6 @@ export class SearchService {
             );
     }
 
-    private getSearchHistory(): string[] {
-        let searchHistory = localStorage.getItem(this.localStorageHistoryKey);
-        return searchHistory == null ? [] : searchHistory
-            .split(this.localStorageHistoryDelimiter);
-    }
-
     getSearchHistoryOrderByDateDesc(): string[] {
         return this.getSearchHistory().reverse();
     }
@@ -65,5 +63,26 @@ export class SearchService {
             searchHistory.push(query);
             localStorage.setItem(this.localStorageHistoryKey, searchHistory.join(this.localStorageHistoryDelimiter));
         }
+    }
+
+    getMediaById(id: string): Observable<MediaWithRating> {
+        return this.httpService.get(
+            this.mediaPath + '/' + id,
+            null,
+            null,
+            false
+        )
+            .pipe(
+                map((response: any) => {
+                    return new MediaWithRating(response);
+                })
+            );
+
+    }
+
+    private getSearchHistory(): string[] {
+        let searchHistory = localStorage.getItem(this.localStorageHistoryKey);
+        return searchHistory == null ? [] : searchHistory
+            .split(this.localStorageHistoryDelimiter);
     }
 }

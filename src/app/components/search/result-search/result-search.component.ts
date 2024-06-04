@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SearchService} from "../../../services/search.service";
+import {MediaService} from "../../../services/media.service";
 import {Media, MediaType} from "../../../models/media";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {DataViewModule} from "primeng/dataview";
@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {Subscription} from "rxjs";
 import {query} from "@angular/animations";
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-result-search',
@@ -25,7 +26,8 @@ import {query} from "@angular/animations";
         RatingModule,
         FormsModule,
         NgForOf,
-        NgIf
+        NgIf,
+        RouterLink
     ],
     templateUrl: './result-search.component.html',
     styleUrl: './result-search.component.scss'
@@ -36,7 +38,7 @@ export class ResultSearchComponent implements OnDestroy, OnInit{
     protected loading: boolean = false;
     private searchQuerySubscription: Subscription;
 
-    constructor(private searchService: SearchService) {
+    constructor(private searchService: MediaService) {
     }
 
     updateSearchResults(query: string) {

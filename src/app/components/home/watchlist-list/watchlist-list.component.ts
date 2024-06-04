@@ -8,6 +8,7 @@ import {MovieUtils} from "../../../utils/movieUtils";
 import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-watchlist-list',
@@ -17,7 +18,8 @@ import {FormsModule} from "@angular/forms";
         CarouselModule,
         SharedModule,
         RatingModule,
-        FormsModule
+        FormsModule,
+        RouterLink
     ],
   templateUrl: './watchlist-list.component.html',
   styleUrl: './watchlist-list.component.scss'

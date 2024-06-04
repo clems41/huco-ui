@@ -8,7 +8,8 @@
                     <div class="flex justify-content-center border-round">
                         <div class="relative mx-auto">
                             <img class="border-round w-full" [src]="movie.posterPath" [alt]="movie.title"
-                                 style="max-width: 200px;"/>
+                                 style="max-width: 200px;"
+                                 [routerLink]="'/media/' + movie.id"/>
                         </div>
                     </div>
                     <div class="pt-1">
@@ -37,7 +38,8 @@
                     <div class="flex justify-content-center border-round">
                         <div class="relative mx-auto">
                             <img class="border-round w-full" [src]="serie.posterPath" [alt]="serie.title"
-                                 style="max-width: 200px;"/>
+                                 style="max-width: 200px;"
+                                 [routerLink]="'/media/' + serie.id"/>
                         </div>
                     </div>
                     <div class="pt-1">

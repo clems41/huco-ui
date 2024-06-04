@@ -35,7 +35,7 @@ export abstract class MovieUtils {
     }
     static getMockSerie1(): Media {
         return new Media({
-            id: '3',
+            id: '9ae0461e-4ed2-4ad1-87d2-e3fd4fbb48f5',
             title: 'Breaking Bad',
             releaseDate: new Date('2008-01-20'),
             posterUrl: 'https://image.tmdb.org/t/p/w400/1yeVJox3rjo2jBKrrihIMj7uoS9.jpg',
@@ -51,7 +51,7 @@ export abstract class MovieUtils {
     }
     static getMockMovieWithRating1(): MediaWithRating {
         return new MediaWithRating({
-            id: '1',
+            id: '770561ca-7fda-4c03-8aac-00cf252ca857',
             title: 'Inception',
             releaseDate: new Date('2010-07-16'),
             posterUrl: 'https://image.tmdb.org/t/p/w400/aej3LRUga5rhgkmRP6XMFw3ejbl.jpg',
@@ -71,7 +71,7 @@ export abstract class MovieUtils {
     }
     static getMockMovieWithRating2(): MediaWithRating {
         return new MediaWithRating({
-            id: '2',
+            id: '7a0c4ab8-e59d-4aa7-a867-fc216756f192',
             title: 'The Dark Knight',
             releaseDate: new Date('2008-07-16'),
             posterUrl: 'https://image.tmdb.org/t/p/w400/qJ2tW6WMUDux911r6m7haRef0WH.jpg',

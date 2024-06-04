@@ -1,0 +1,13 @@
+<div class="container">
+    <img
+        [src]="media.backdropPath"
+        alt="backdrop"
+        width="100%">
+    <div class="title"><h3>{{ media.title }} ({{ media.getReleaseYear() }})</h3></div>
+    <div class="rating">
+        <p-rating [(ngModel)]="media.ratingAverage"
+                  [cancel]="false" [readonly]="true"
+                  [stars]="Constants.MAX_RATING_STARS"
+        />
+    </div>
+</div>

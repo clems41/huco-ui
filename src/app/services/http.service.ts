@@ -18,6 +18,9 @@ export class HttpService {
         if (queryParameters !== null) {
             options['params'] = queryParameters;
         }
+        if (headers !== null) {
+            options['headers'] = headers;
+        }
         return this.httpClient.get(environment.API_URL + url, options)
             .pipe(
                 catchError((error): string => {
@@ -70,7 +73,6 @@ export class HttpService {
         if (error.error !== null) {
             let response: ErrorResponse = error.error;
             if (response !== null) {
-                console.error(response.errorCode);
                 return response.errorMessage;
             }
         }

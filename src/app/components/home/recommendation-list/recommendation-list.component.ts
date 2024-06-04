@@ -10,6 +10,7 @@ import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {TooltipModule} from "primeng/tooltip";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-recommendation-list',
@@ -21,7 +22,8 @@ import {TooltipModule} from "primeng/tooltip";
         ScrollerModule,
         RatingModule,
         FormsModule,
-        TooltipModule
+        TooltipModule,
+        RouterLink
     ],
   templateUrl: './recommendation-list.component.html',
   styleUrl: './recommendation-list.component.scss'

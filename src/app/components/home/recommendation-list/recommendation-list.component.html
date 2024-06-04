@@ -14,7 +14,8 @@
                     <img
                         src="{{ movie.posterPath }}"
                         [alt]="movie.title"
-                        class="w-full border-round"/>
+                        class="w-full border-round"
+                        [routerLink]="'/media/' + movie.id"/>
                 </div>
             </div>
             <div class="rating"><p-rating [(ngModel)]="movie.ratingAverage"

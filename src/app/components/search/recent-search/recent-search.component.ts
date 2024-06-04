@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SearchService} from "../../../services/search.service";
+import {MediaService} from "../../../services/media.service";
 import {TableModule} from "primeng/table";
 import {Subscription} from "rxjs";
 import {query} from "@angular/animations";
@@ -15,7 +15,7 @@ import {query} from "@angular/animations";
 })
 export class RecentSearchComponent implements OnInit {
     searchHistory: string[] = [];
-    constructor(private searchService: SearchService) {
+    constructor(private searchService: MediaService) {
     }
 
     onHistoryClick(query: string) {

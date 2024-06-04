@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import {SearchService} from "../../../services/search.service";
+import {MediaService} from "../../../services/media.service";
 import {debounceTime} from "rxjs";
 import {Location} from "@angular/common";
 
@@ -21,7 +21,7 @@ import {Location} from "@angular/common";
 export class TopBarSearchComponent {
     searchControl: FormControl;
 
-    constructor(private searchService: SearchService,
+    constructor(private searchService: MediaService,
                 private location: Location) {
         this.searchControl = new FormControl();
 

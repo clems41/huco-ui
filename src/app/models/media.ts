@@ -57,8 +57,8 @@ export class MediaWithRating extends Media {
 
     constructor(json: any) {
         super(json);
-        this.ratingAverage = json.ratingAverage;
-        this.ratingCount = json.ratingCount;
+        this.ratingAverage = json.recommendationRatingAverage;
+        this.ratingCount = json.recommendationRatingCount;
         this.personalComment = json.personalComment;
         this.personalRating = json.personalRating;
     }
