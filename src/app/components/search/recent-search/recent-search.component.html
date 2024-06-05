@@ -2,8 +2,8 @@
 <p-table [value]="searchHistory" styleClass="search-table">
     <ng-template pTemplate="body" let-history>
         <tr>
-            <td>
-                <a (click)="onHistoryClick(history)"> <span class="pi pi-clock"></span> {{ history }}</a>
+            <td (click)="onHistoryClick(history)">
+                <a> <span class="pi pi-clock"></span> {{ history }}</a>
             </td>
         </tr>
     </ng-template>

@@ -5,7 +5,6 @@ import {MediaHighlightComponent} from "./media-highlight/media-highlight.compone
 import {RecommendationListComponent} from "./recommendation-list/recommendation-list.component";
 import {WatchlistListComponent} from "./watchlist-list/watchlist-list.component";
 import {TopBarHomeComponent} from "./top-bar-home/top-bar-home.component";
-import {SendRecommendationComponent} from "./send-recommendation/send-recommendation.component";
 
 @NgModule({
     imports: [
@@ -14,7 +13,6 @@ import {SendRecommendationComponent} from "./send-recommendation/send-recommenda
         RecommendationListComponent,
         WatchlistListComponent,
         TopBarHomeComponent,
-        SendRecommendationComponent
     ],
     declarations: [HomeComponent]
 })

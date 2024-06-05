@@ -1,13 +1,58 @@
-<div class="container">
+<div class="container" *ngIf="media">
     <img
         [src]="media.backdropPath"
         alt="backdrop"
         width="100%">
-    <div class="title"><h3>{{ media.title }} ({{ media.getReleaseYear() }})</h3></div>
-    <div class="rating">
-        <p-rating [(ngModel)]="media.ratingAverage"
-                  [cancel]="false" [readonly]="true"
-                  [stars]="Constants.MAX_RATING_STARS"
-        />
+    <div class="details">
+        <div class="title">{{ media.title }} ({{ media.getReleaseYear() }})</div>
+        <div class="details">
+            <span>Durée : {{ media.getRuntimeFormatted() }}</span><br>
+            <span>Genres : {{ media.genres }}</span><br>
+            <span>Réalisteur : {{ media.director }}</span><br>
+            <span>Acteurs : {{
+                    media.actors.slice(
+                        0,
+                        media.actors.length > Constants.ACTORS_MAX_LENGTH ? Constants.ACTORS_MAX_LENGTH : media.actors.length
+                    ).join(', ')
+                }}</span><br>
+        </div>
+        <div class="overview">
+            {{ media.overview | slice:overviewOptions.start:overviewOptions.end }}
+            <span class="expander" *ngIf="media.overview.length > overviewOptions.end" (click)="onExpandText($event)">...Voir plus</span>
+            <span class="expander" *ngIf="media.overview.length == overviewOptions.end"
+                  (click)="onCollapseText($event)">Voir moins</span>
+        </div>
+        <div *ngIf="!isMediaInLibrary">
+            <div class="watchlist">
+                <button *ngIf="isMediaInWatchlist" pButton type="button" label="Watchlist" icon="pi pi-check-circle"
+                        (click)="removeMediaFromWatchlist(media)"></button>
+                <button *ngIf="!isMediaInWatchlist" pButton type="button" label="Watchlist" icon="pi pi-circle"
+                        (click)="addMediaToWatchlist(media)"></button>
+                <button pButton type="button" label="Déjà vu" icon="pi pi-bookmark"></button>
+            </div>
+        </div>
+        <div class="library" *ngIf="isMediaInLibrary">
+            <p-card header="Mon avis" *ngIf="media.personalRating !== null">
+                <p class="m-0">
+                    {{ media.personalComment }}
+                </p>
+                <div class="rating">
+                    <p-rating [(ngModel)]="media.personalRating"
+                              [cancel]="false" [readonly]="true"
+                              [stars]="Constants.MAX_RATING_STARS"
+                    />
+                </div>
+            </p-card>
+        </div>
+        <div class="rating" *ngIf="media.ratingCount !== null && media.ratingCount > 0">
+            <p-rating [(ngModel)]="media.ratingAverage"
+                      [cancel]="false" [readonly]="true"
+                      [stars]="Constants.MAX_RATING_STARS"
+            />
+            <p-badge [value]="media.ratingCount.toString()"/>
+        </div>
     </div>
+    <span>
+        <p-button icon="pi pi-send" styleClass="send-button" (click)="onSendRecommendation()"/>
+    </span>
 </div>

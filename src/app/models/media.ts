@@ -11,6 +11,8 @@ export class Media {
     posterPath: string;
     backdropPath: string;
     trailerUrl: string;
+    director: string;
+    actors: string[];
     originalLanguage: string;
     genres: string[];
     runtime: number;
@@ -29,6 +31,8 @@ export class Media {
         this.originalTitle = json.originalTitle;
         this.overview = json.overview;
         this.originalLanguage = json.originalLanguage;
+        this.director = json.director;
+        this.actors = json.actors != null ? json.actors.split(',') : [];
     }
 
     getFirstGenre(): string {
@@ -41,7 +45,12 @@ export class Media {
         }
         const hours = Math.floor(this.runtime / 60);
         const minutes = this.runtime % 60;
-        return `${hours}h${minutes}`;
+        const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
+        return `${hours}h${minutesString}`;
+    }
+
+    shouldNotBeDisplayed(): boolean {
+        return this.posterPath === null || this.backdropPath === null || this.overview === null;
     }
 
     getReleaseYear(): number {

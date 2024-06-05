@@ -25,7 +25,7 @@ export class TopBarSearchComponent {
                 private location: Location) {
         this.searchControl = new FormControl();
 
-        this.searchControl.valueChanges.pipe(debounceTime(500)).subscribe(query => {
+        this.searchControl.valueChanges.pipe(debounceTime(800)).subscribe(query => {
             this.searchService.updateSearchQuery(query);
         });
 

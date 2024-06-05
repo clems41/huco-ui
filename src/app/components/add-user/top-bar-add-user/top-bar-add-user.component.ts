@@ -26,7 +26,6 @@ export class TopBarAddUserComponent {
         this.searchControl = new FormControl();
 
         this.searchControl.valueChanges.pipe(debounceTime(500)).subscribe(query => {
-            console.log('here');
             if (query.length < 3) {
                 return;
             }

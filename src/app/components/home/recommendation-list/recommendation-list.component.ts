@@ -33,7 +33,7 @@ export class RecommendationListComponent implements OnInit{
     constructor(private recommendationService: RecommendationService) {
     }
     ngOnInit(): void {
-        this.recommendationService.getRecommendations().subscribe((recommendations) => {
+        this.recommendationService.getRecommendationsReceived().subscribe((recommendations) => {
             this.recommendations = recommendations;
         })
     }

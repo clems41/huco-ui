@@ -49,7 +49,7 @@ export class ResultSearchComponent implements OnDestroy, OnInit{
         }
         this.loading = true;
         this.searchService.searchMedias(query).subscribe(result => {
-            result = result.filter(media => media.posterPath !== null)
+            result = result.filter(media => !media.shouldNotBeDisplayed());
             this.movieFirst = result.length > 0 ? result[0].mediaType === MediaType.Movie : true;
             this.searchResultMovies = result
                 .filter(media => media.mediaType === MediaType.Movie)
