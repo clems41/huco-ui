@@ -23,6 +23,7 @@ $gutter: 1rem; //for primeflex grid system
 }
 
 .action-button {
+    display: flex;
     background-color: #f4ad35;
     color: #FFFFFF;
     border: none;

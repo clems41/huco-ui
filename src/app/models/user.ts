@@ -2,6 +2,14 @@ export class User {
     id: string;
     username: string;
     displayName: string;
+    fullName: string;
+
+    constructor(json: any) {
+        this.id = json.id;
+        this.username = json.username;
+        this.displayName = json.displayName;
+        this.fullName = this.displayName + ' (' + this.username + ')';
+    }
 }
 
 export class AuthUser extends User {

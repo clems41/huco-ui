@@ -1,2 +1,70 @@
-<p>send-recommendation-form works!</p>
-{{ media?.title}}
+<!--<img *ngIf="media?.posterPath"
+     alt="poster"
+     width="50%" [src]="media.posterPath"/>-->
+<div [ngStyle]="{'background-image': 'url(' + media?.posterPath + ')',
+'width': '100%'}" class="container w-100">
+    <form [formGroup]="recommendationForm" (ngSubmit)="sendRecommendation()" class="col">
+    <span class="w-100 row">
+        <p-autoComplete
+            formControlName="media"
+            [suggestions]="mediaSuggestions"
+            (completeMethod)="searchMedia($event)"
+            [multiple]="false"
+            (onSelect)="onSelectMedia($event)"
+            optionLabel="title"
+            placeholder="Média">
+                <ng-template let-element pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <img
+                            [src]="element.posterPath"
+                            style="width: 30px"/>
+                        <div>{{ element.title }}</div>
+                    </div>
+                </ng-template>
+            </p-autoComplete>
+    </span>
+        <span class="w-100 row">
+        <p-autoComplete
+            formControlName="users"
+            [suggestions]="userSuggestions"
+            (completeMethod)="searchUser($event)"
+            [multiple]="true"
+            optionLabel="fullName"
+            placeholder="Utilisateurs"/>
+    </span>
+        <textarea class="w-100 row"
+                  rows="5"
+                  cols="30"
+                  pInputTextarea
+                  formControlName="comment"
+                  placeholder="Commentaire">
+        </textarea>
+        <div class="rating">
+            <label>Notation : </label>
+            <p-rating rating formControlName="rating"
+                      [cancel]="false" [readonly]="false"
+                      [stars]="Constants.MAX_RATING_STARS"
+            />
+        </div>
+
+
+
+
+        <div *ngIf="isSubmitted" class="error-message">
+            <div *ngIf="formControls['media'].errors" class="error-message">
+                <div *ngIf="formControls['media'].errors.required">Veuillez choisir un média</div>
+            </div>
+            <div *ngIf="formControls['users'].errors" class="error-message">
+                <div *ngIf="formControls['users'].errors.required">Veuillez sélectionner au moins un utilisateur</div>
+            </div>
+            <div *ngIf="formControls['rating'].errors" class="error-message">
+                <div *ngIf="formControls['rating'].errors.required">Renseignez une note</div>
+            </div>
+            <div *ngIf="errorMessage != null" class="error-message">
+                <div>{{errorMessage}}</div>
+            </div>
+        </div>
+
+        <input type="submit" value="Envoyer" class="w-50 row action-button">
+    </form>
+</div>

@@ -7,28 +7,29 @@
     [showNavigators]="false"
     [showIndicators]="false"
 >
-    <ng-template let-movie pTemplate="item">
-        <div class="surface-border border-round m-1">
+    <ng-template let-recommendation pTemplate="item" [ngStyle]="{'max-width': '33%'}">
+        <div class="surface-border border-round m-1 item">
             <div class="">
                 <div class="relative mx-auto">
                     <img
-                        src="{{ movie.posterPath }}"
-                        [alt]="movie.title"
+                        src="{{ recommendation.media.posterPath }}"
+                        [alt]="recommendation.media.title"
                         class="w-full border-round"
-                        [routerLink]="'/media/' + movie.id"/>
+                        [routerLink]="'/media/' + recommendation.media.id"/>
                 </div>
             </div>
-            <div class="rating"><p-rating [(ngModel)]="movie.ratingAverage"
+            <div class="rating">
+                <span class="font-l font-semibold">{{recommendation.sentBy.displayName}} : </span>
+                <span class="font-l">{{ recommendation.comment }}</span>
+                <br>
+                <p-rating [(ngModel)]="recommendation.rating"
                                           [cancel]="false" [readonly]="true"
                                           [stars]="Constants.MAX_RATING_STARS"
             /></div>
             <div class="font-l font-semibold">
-                {{ movie.title }} ({{ movie.getReleaseYear() }})
+                {{ recommendation.media.title }} ({{ recommendation.media.getReleaseYear() }})
             </div>
             <div class="flex justify-content-between align-items-center">
-                <div class="text-medium">
-                    {{ movie.getFirstGenre() }} - {{ movie.getRuntimeFormatted() }}
-                </div>
                 <span>
                     <p-button icon="pi pi-check-square" styleClass="action-button"/>
                 </span>

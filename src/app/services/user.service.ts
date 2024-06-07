@@ -38,7 +38,11 @@ export class UserService {
         )
             .pipe(
                 map((response: any) => {
-                    return response.content;
+                    let result: User[] = [];
+                    response.content.forEach((json: string) => {
+                        result.push(new User(json));
+                    });
+                    return result;
                 })
             );
     }

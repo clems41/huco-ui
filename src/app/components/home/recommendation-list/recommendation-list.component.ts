@@ -11,6 +11,7 @@ import {RatingModule} from "primeng/rating";
 import {FormsModule} from "@angular/forms";
 import {TooltipModule} from "primeng/tooltip";
 import {RouterLink} from "@angular/router";
+import {Recommendation} from "../../../models/sendRecommendationForm";
 
 @Component({
   selector: 'app-recommendation-list',
@@ -29,7 +30,7 @@ import {RouterLink} from "@angular/router";
   styleUrl: './recommendation-list.component.scss'
 })
 export class RecommendationListComponent implements OnInit{
-    protected recommendations: MediaWithRating[] = [];
+    protected recommendations: Recommendation[] = [];
     constructor(private recommendationService: RecommendationService) {
     }
     ngOnInit(): void {

@@ -5,6 +5,7 @@ import {MediaHighlightComponent} from "./media-highlight/media-highlight.compone
 import {RecommendationListComponent} from "./recommendation-list/recommendation-list.component";
 import {WatchlistListComponent} from "./watchlist-list/watchlist-list.component";
 import {TopBarHomeComponent} from "./top-bar-home/top-bar-home.component";
+import {ButtonModule} from "primeng/button";
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import {TopBarHomeComponent} from "./top-bar-home/top-bar-home.component";
         RecommendationListComponent,
         WatchlistListComponent,
         TopBarHomeComponent,
+        ButtonModule,
     ],
     declarations: [HomeComponent]
 })

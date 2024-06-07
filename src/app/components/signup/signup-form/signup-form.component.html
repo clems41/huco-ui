@@ -32,7 +32,7 @@
 
     <div *ngIf="isSubmitted" class="error-message">
         <div *ngIf="formControls['password'].errors" class="error-message">
-            <div *ngIf="formControls.password.errors.required">Mot de passe obligatoire</div>
+            <div *ngIf="formControls['password'].errors.required">Mot de passe obligatoire</div>
         </div>
         <div *ngIf="formControls['username'].errors" class="error-message">
             <div *ngIf="formControls['username'].errors.required">Nom d'utilisateur obligatoire</div>

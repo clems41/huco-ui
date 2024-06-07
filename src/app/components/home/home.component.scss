@@ -1,0 +1,20 @@
+:host ::ng-deep .send-button {
+    background-color: #f4ad35;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.5rem 0.5rem;
+    border-radius: 20rem;
+    font-size: 4rem;
+    position: fixed;
+    bottom: 5rem;
+    right: 1rem;
+}
+
+:host ::ng-deep .send-button.p-button.p-button-icon-only {
+    width: 5rem;
+    height: 5rem;
+}
+
+:host ::ng-deep .send-button .pi {
+    font-size: 2rem;
+}

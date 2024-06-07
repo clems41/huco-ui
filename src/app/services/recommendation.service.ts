@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Media, MediaWithRating} from "../models/media";
 import {map, Observable, of} from "rxjs";
 import {MovieUtils} from "../utils/movieUtils";
-import {Recommendation} from "../models/recommendation";
+import {Recommendation, SendRecommendationForm} from "../models/sendRecommendationForm";
 import {HttpService} from "./http.service";
 
 @Injectable({
@@ -19,14 +19,13 @@ export class RecommendationService {
         return of(MovieUtils.getMockMovieWithRating2());
     }
 
-    getRecommendationsReceived(): Observable<MediaWithRating[]> {
+    getRecommendationsReceived(): Observable<Recommendation[]> {
         return this.httpService.get(this.recommendationReceivedPath)
             .pipe(
                 map((response: any) => {
-                    let result: MediaWithRating[] = [];
-                    response.content.forEach((media: any) => {
-                        let mediaWithRating = new MediaWithRating(media);
-                        result.push(mediaWithRating);
+                    let result: Recommendation[] = [];
+                    response.content.forEach((json: any) => {
+                        result.push(new Recommendation(json));
                     });
                     return result;
                 })
@@ -34,7 +33,7 @@ export class RecommendationService {
             );
     }
 
-    sendRecommendation(recommendation: Recommendation) {
+    sendRecommendation(recommendation: SendRecommendationForm) {
         return this.httpService.post(this.recommendationPath, recommendation);
     }
 }
