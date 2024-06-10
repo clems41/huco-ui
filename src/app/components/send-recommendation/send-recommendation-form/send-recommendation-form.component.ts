@@ -12,6 +12,7 @@ import {NgIf, NgStyle} from "@angular/common";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AppConstants} from "../../../constants/appConstants";
 import {RatingModule} from "primeng/rating";
+import {MessageService} from "primeng/api";
 
 @Component({
     selector: 'app-send-recommendation-form',
@@ -39,7 +40,8 @@ export class SendRecommendationFormComponent implements OnInit, OnDestroy {
                 private formBuilder: FormBuilder,
                 private recommendationService: RecommendationService,
                 private userService: UserService,
-                private mediaService: MediaService) {
+                private mediaService: MediaService,
+                private messageService: MessageService) {
         let currentNavigation = this.router.getCurrentNavigation();
         this.media = currentNavigation?.extras?.state != null ?
             currentNavigation.extras.state['media'] :
@@ -94,7 +96,6 @@ export class SendRecommendationFormComponent implements OnInit, OnDestroy {
         if (this.recommendationForm.invalid) {
             return;
         }
-        console.log('Sending recommendation');
         this.recommendationService.sendRecommendation(new SendRecommendationForm(
             this.recommendationForm.value['media'].id,
             this.recommendationForm.value['rating'],
@@ -102,10 +103,11 @@ export class SendRecommendationFormComponent implements OnInit, OnDestroy {
             this.recommendationForm.value['users'].map((user: User) => user.id)
         )).subscribe({
                 next: () => {
+                    this.messageService.add({severity: 'success', summary: 'Succès', detail: 'Recommandation envoyée !'});
                     this.router.navigateByUrl('/');
                 },
                 error: (error: string) => {
-                    this.errorMessage = error;
+                    this.messageService.add({severity: 'error', summary: 'Erreur', detail: error});
                 }
             }
         )

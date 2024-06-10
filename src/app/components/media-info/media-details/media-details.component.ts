@@ -12,6 +12,8 @@ import {BadgeModule} from "primeng/badge";
 import {CardModule} from "primeng/card";
 import {WatchlistService} from "../../../services/watchlist.service";
 import {LibraryService} from "../../../services/library.service";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {AddToLibraryComponent} from "../../add-to-library/add-to-library.component";
 
 @Component({
     selector: 'app-media-details',
@@ -40,41 +42,48 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
     protected isMediaInWatchlist: boolean = false;
     protected isMediaInLibrary: boolean = false;
+    private addToLibRef: DynamicDialogRef;
 
     constructor(private mediaService: MediaService,
                 private route: ActivatedRoute,
                 private watchlistService: WatchlistService,
                 private libraryService: LibraryService,
-                public router: Router) {
+                public router: Router,
+                public dialogService: DialogService) {
     }
 
     ngOnInit(): void {
         this.routeSub = this.route.params.subscribe(params => {
             let mediaId: string = params['id'];
-            this.mediaService.getMediaById(mediaId)
-                .subscribe((res) => {
-                    this.media = res;
-                });
-            this.watchlistService.isMediaInWatchlist(mediaId)
-                .subscribe((res) => {
-                    this.isMediaInWatchlist = res;
-                });
-            this.libraryService.isMediaInLibrary(mediaId)
-                .subscribe((res) => {
-                    this.isMediaInLibrary = res;
-                });
+            this.refreshMedia(mediaId);
         });
+    }
+
+    private refreshMedia(mediaId: string): void {
+        this.mediaService.getMediaById(mediaId)
+            .subscribe((res) => {
+                this.media = res;
+            });
+        this.watchlistService.isMediaInWatchlist(mediaId)
+            .subscribe((res) => {
+                this.isMediaInWatchlist = res;
+            });
+        this.libraryService.isMediaInLibrary(mediaId)
+            .subscribe((res) => {
+                this.isMediaInLibrary = res;
+            });
+
     }
 
     ngOnDestroy(): void {
         this.routeSub.unsubscribe();
     }
 
-    onExpandText(evt:any): void{
+    onExpandText(evt: any): void {
         this.overviewOptions.end = this.media.overview.length;
     }
 
-    onCollapseText(evt:any): void{
+    onCollapseText(evt: any): void {
         this.overviewOptions.end = this.overviewOptions.default;
     }
 
@@ -95,6 +104,19 @@ export class MediaDetailsComponent implements OnInit, OnDestroy {
     }
 
     onSendRecommendation(): void {
-        this.router.navigateByUrl('/recommendation', { state: { media: this.media } });
+        this.router.navigateByUrl('/recommendation', {state: {media: this.media}});
+    }
+
+    openAddToLibraryDialog(media: MediaWithRating): void {
+        this.addToLibRef = this.dialogService.open(AddToLibraryComponent, {
+            header: 'Ajouter à ma bibliothèque',
+            width: '80vw',
+            height: '80vw',
+            contentStyle: { overflow: 'auto' },
+            data: { media: media }
+        });
+        this.addToLibRef.onClose.subscribe(() => {
+            this.refreshMedia(media.id);
+        });
     }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpService} from "./http.service";
 import {map, Observable} from "rxjs";
 import {MediaWithRating} from "../models/media";
+import {AddToLibraryRequest} from "../models/library";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class LibraryService {
         );
     }
 
-    addMediaToLibrary(mediaId: string) {
-        return this.httpService.put(this.libraryPath + '/' + mediaId, null);
+    addMediaToLibrary(mediaId: string, addMediaToLibraryRequest: AddToLibraryRequest) {
+        return this.httpService.post(this.libraryPath + '/' + mediaId, addMediaToLibraryRequest);
     }
 
     removeMediaFromLibrary(mediaId: string) {

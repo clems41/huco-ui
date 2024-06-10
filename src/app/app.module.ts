@@ -4,13 +4,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import {RecommendationService} from "./services/recommendation.service";
+import {MessageService} from "primeng/api";
+import {DialogService} from "primeng/dynamicdialog";
 
 @NgModule({
     declarations: [AppComponent],
     imports: [AppRoutingModule, AppLayoutModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
-        RecommendationService
+        RecommendationService,
+        MessageService,
+        DialogService
     ],
     bootstrap: [AppComponent],
 })

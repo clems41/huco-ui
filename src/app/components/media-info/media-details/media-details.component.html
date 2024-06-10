@@ -22,13 +22,14 @@
             <span class="expander" *ngIf="media.overview.length == overviewOptions.end"
                   (click)="onCollapseText($event)">Voir moins</span>
         </div>
-        <div *ngIf="!isMediaInLibrary">
-            <div class="watchlist">
-                <button *ngIf="isMediaInWatchlist" pButton type="button" label="Watchlist" icon="pi pi-check-circle"
-                        (click)="removeMediaFromWatchlist(media)"></button>
-                <button *ngIf="!isMediaInWatchlist" pButton type="button" label="Watchlist" icon="pi pi-circle"
-                        (click)="addMediaToWatchlist(media)"></button>
-                <button pButton type="button" label="Déjà vu" icon="pi pi-bookmark"></button>
+        <div class="watchlist">
+            <button *ngIf="isMediaInWatchlist" pButton type="button" label="Watchlist" icon="pi pi-check-circle"
+                    (click)="removeMediaFromWatchlist(media)"></button>
+            <button *ngIf="!isMediaInWatchlist" pButton type="button" label="Watchlist" icon="pi pi-circle"
+                    (click)="addMediaToWatchlist(media)"></button>
+            <div *ngIf="!isMediaInLibrary">
+                <button pButton type="button" label="Déjà vu" icon="pi pi-bookmark"
+                        (click)="openAddToLibraryDialog(media)"></button>
             </div>
         </div>
         <div class="library" *ngIf="isMediaInLibrary">
