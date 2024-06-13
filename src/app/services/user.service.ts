@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpService} from "./http.service";
 import {AuthUser, User} from "../models/user";
 import {HttpParams} from "@angular/common/http";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
     private usersPath = '/users';
@@ -13,10 +13,18 @@ export class UserService {
 
     private searchQuery: BehaviorSubject<string> = new BehaviorSubject('');
     private refreshRelatedUsers: BehaviorSubject<AuthUser> = new BehaviorSubject(null);
+    private relatedUsers: User[] = [];
 
-    constructor(private httpService: HttpService) { }
-    getSearchQuery() { return this.searchQuery; }
-    getRefreshRelatedUsers() { return this.refreshRelatedUsers; }
+    constructor(private httpService: HttpService) {
+    }
+
+    getSearchQuery() {
+        return this.searchQuery;
+    }
+
+    getRefreshRelatedUsers() {
+        return this.refreshRelatedUsers;
+    }
 
     updateSearchQuery(query: string) {
         this.searchQuery.next(query);
@@ -42,7 +50,12 @@ export class UserService {
                     response.content.forEach((json: string) => {
                         result.push(new User(json));
                     });
-                    return result;
+                    return result
+                        .filter((user: User) => {
+                            return !this.relatedUsers.some((relatedUser: User) => {
+                                return relatedUser.id === user.id;
+                            });
+                        });
                 })
             );
     }
@@ -51,24 +64,30 @@ export class UserService {
         return this.httpService.get(this.ownInfoPath)
             .pipe(
                 map((response: AuthUser) => {
+                    this.relatedUsers = response.relatedUsers;
+                    response.relatedUsers.sort((a: User, b: User) => {
+                        return a.username.localeCompare(b.username);
+                    });
                     return response;
                 })
             );
     }
 
     addRelatedUser(userId: string): Observable<AuthUser> {
-        return this.httpService.put(this.ownInfoPath + '/related/' + userId, {})
+        return this.httpService.put(this.usersPath + '/related/' + userId, {})
             .pipe(
                 map((response: AuthUser) => {
+                    this.relatedUsers = response.relatedUsers;
                     return response;
                 })
             );
     }
 
     removeRelatedUser(userId: string): Observable<AuthUser> {
-        return this.httpService.delete(this.ownInfoPath + '/related/' + userId)
+        return this.httpService.delete(this.usersPath + '/related/' + userId)
             .pipe(
                 map((response: AuthUser) => {
+                    this.relatedUsers = response.relatedUsers;
                     return response;
                 })
             );

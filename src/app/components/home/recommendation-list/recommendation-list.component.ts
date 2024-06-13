@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import {TooltipModule} from "primeng/tooltip";
 import {RouterLink} from "@angular/router";
 import {Recommendation} from "../../../models/sendRecommendationForm";
+import {WatchlistService} from "../../../services/watchlist.service";
 
 @Component({
   selector: 'app-recommendation-list',
@@ -31,7 +32,8 @@ import {Recommendation} from "../../../models/sendRecommendationForm";
 })
 export class RecommendationListComponent implements OnInit{
     protected recommendations: Recommendation[] = [];
-    constructor(private recommendationService: RecommendationService) {
+    constructor(private recommendationService: RecommendationService,
+                private watchlistService: WatchlistService) {
     }
     ngOnInit(): void {
         this.recommendationService.getRecommendationsReceived().subscribe((recommendations) => {

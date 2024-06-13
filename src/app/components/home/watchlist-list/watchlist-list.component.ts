@@ -28,12 +28,20 @@ export class WatchlistListComponent implements OnInit{
     protected watchlist: MediaWithRating[] = [];
     constructor(private watchlistService: WatchlistService) {}
     ngOnInit(): void {
+        this.refreshWatchlist();
+    }
+    protected readonly Constants = AppConstants;
+
+    refreshWatchlist() {
         this.watchlistService.getWatchlist().subscribe((watchlist) => {
             this.watchlist = watchlist;
         })
     }
 
-    protected readonly Math = Math;
-    protected readonly Utils = MovieUtils;
-    protected readonly Constants = AppConstants;
+    removeFromWatchlist(media: Media) {
+        this.watchlistService.removeMediaFromWatchlist(media.id)
+            .subscribe(() => {
+                this.refreshWatchlist();
+            });
+    }
 }
